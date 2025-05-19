@@ -1,0 +1,1 @@
+{"id": 1, "title": "Print a message", "instruction": "Use console.log to print the message "Hello, World!"", "example": "console.log("Hello, World!");", "expectedOutput": "Hello, World!", "validation": {"contains": ["console.log"], "exactOutput": "Hello, World!"}}

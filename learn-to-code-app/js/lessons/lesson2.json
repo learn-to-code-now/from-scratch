@@ -1,0 +1,1 @@
+{"id": 2, "title": "Use a variable", "instruction": "Create a variable named name and print it using console.log", "example": "let name = "Alice";\\nconsole.log(name);", "expectedOutput": "Alice", "validation": {"contains": ["let", "console.log"], "exactOutput": "Alice"}}

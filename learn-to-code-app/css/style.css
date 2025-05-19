@@ -1,0 +1,4 @@
+body { font-family: sans-serif; padding: 20px; }
+#codeEditor { height: 200px; }
+#output { background: #f0f0f0; padding: 10px; white-space: pre-wrap; }
+#feedback { margin-top: 10px; font-weight: bold; }
