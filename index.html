@@ -1,10 +1,7 @@
 from pathlib import Path
 
-# Pfad zur HTML-Datei
-output_path = Path("/mnt/data/learn-to-code-app_intro.html")
-
-# HTML-Inhalt aus dem Canvas-Dokument
-html_code = '''<!DOCTYPE html>
+# Neuer HTML-Inhalt mit besserer Instruktion und Anfänger-Fehlertests
+improved_html = """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -22,7 +19,6 @@ html_code = '''<!DOCTYPE html>
     let editor;
 
     async function validateLicenseKey() {
-      // Test-Modus: Lizenzprüfung überspringen
       if (true) {
         localStorage.setItem("validLicense", "true");
         document.getElementById("loginSection").style.display = "none";
@@ -40,7 +36,11 @@ html_code = '''<!DOCTYPE html>
 
     function loadLesson() {
       document.getElementById("lessonTitle").innerText = "Lesson 1: Hello World";
-      document.getElementById("lessonText").innerText = "Write a line of JavaScript that prints 'Hello, World!' to the console.";
+      document.getElementById("lessonText").innerText =
+        "In programming, we use console.log() to print something on the screen.\\n\\n" +
+        "Your task: Print the phrase Hello, World!\\n\\n" +
+        "✅ Tip: Wrap the text in quotation marks like this:\\n" +
+        'console.log("Hello, World!");';
 
       editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
         lineNumbers: true,
@@ -48,26 +48,39 @@ html_code = '''<!DOCTYPE html>
         theme: "default"
       });
 
-      editor.setValue("// Your code here");
+      editor.setValue("// Type your code here...");
     }
 
     function runCode() {
       const code = editor.getValue();
-      try {
-        const output = [];
-        const originalLog = console.log;
-        console.log = (...args) => output.push(args.join(" "));
-        eval(code);
-        console.log = originalLog;
-        const result = output.join("\\n");
+      let userOutput = "";
+      const log = console.log;
+      console.log = (...args) => userOutput += args.join(" ") + "\\n";
 
-        if (result.trim() === "Hello, World!") {
+      try {
+        eval(code);
+        console.log = log;
+
+        if (!code.includes("console.log")) {
+          document.getElementById("output").textContent = "❌ You must use console.log to print output.";
+          return;
+        }
+        if (!code.includes('"') && !code.includes("'")) {
+          document.getElementById("output").textContent = "❌ Your text must be inside quotation marks.";
+          return;
+        }
+
+        const trimmedOutput = userOutput.trim();
+        if (trimmedOutput === "Hello, World!") {
           document.getElementById("output").textContent = "✅ Correct! Well done.";
         } else {
-          document.getElementById("output").textContent = `⚠️ Output: ${result}`;
+          document.getElementById("output").textContent =
+            `⚠️ Your output was: "${trimmedOutput}". It should be exactly: "Hello, World!"`;
         }
       } catch (e) {
-        document.getElementById("output").textContent = `❌ Error: ${e.message}`;
+        console.log = log;
+        document.getElementById("output").textContent = "❌ Error: " + e.message + "\\n" +
+          "💡 Tip: Make sure your text is in quotation marks. Example: console.log(\\"Hello, World!\\");";
       }
     }
 
@@ -95,15 +108,17 @@ html_code = '''<!DOCTYPE html>
 
   <div id="lessonSection">
     <h1 id="lessonTitle"></h1>
-    <p id="lessonText"></p>
+    <pre id="lessonText"></pre>
     <textarea id="editor"></textarea><br>
     <button onclick="runCode()">Run Code</button>
     <pre id="output"></pre>
   </div>
 </body>
 </html>
-'''
+"""
 
-# Datei schreiben
-output_path.write_text(html_code, encoding='utf-8')
-output_path.name
+# Pfad definieren
+output_file = Path("/mnt/data/learn-to-code-app_better_intro.html")
+output_file.write_text(improved_html, encoding="utf-8")
+
+output_file.name
