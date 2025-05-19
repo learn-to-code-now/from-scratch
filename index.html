@@ -1,4 +1,10 @@
-<!DOCTYPE html>
+from pathlib import Path
+
+# Pfad zur HTML-Datei
+output_path = Path("/mnt/data/learn-to-code-app_intro.html")
+
+# HTML-Inhalt aus dem Canvas-Dokument
+html_code = '''<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -53,7 +59,7 @@
         console.log = (...args) => output.push(args.join(" "));
         eval(code);
         console.log = originalLog;
-        const result = output.join("\n");
+        const result = output.join("\\n");
 
         if (result.trim() === "Hello, World!") {
           document.getElementById("output").textContent = "✅ Correct! Well done.";
@@ -96,3 +102,8 @@
   </div>
 </body>
 </html>
+'''
+
+# Datei schreiben
+output_path.write_text(html_code, encoding='utf-8')
+output_path.name
