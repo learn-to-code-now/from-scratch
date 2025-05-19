@@ -1,7 +1,4 @@
-from pathlib import Path
-
-# Neuer HTML-Inhalt mit besserer Instruktion und Anfänger-Fehlertests
-improved_html = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -37,9 +34,9 @@ improved_html = """<!DOCTYPE html>
     function loadLesson() {
       document.getElementById("lessonTitle").innerText = "Lesson 1: Hello World";
       document.getElementById("lessonText").innerText =
-        "In programming, we use console.log() to print something on the screen.\\n\\n" +
-        "Your task: Print the phrase Hello, World!\\n\\n" +
-        "✅ Tip: Wrap the text in quotation marks like this:\\n" +
+        "In programming, we use console.log() to print something on the screen.\n\n" +
+        "Your task: Print the phrase Hello, World!\n\n" +
+        "✅ Tip: Wrap the text in quotation marks like this:\n" +
         'console.log("Hello, World!");';
 
       editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
@@ -55,7 +52,7 @@ improved_html = """<!DOCTYPE html>
       const code = editor.getValue();
       let userOutput = "";
       const log = console.log;
-      console.log = (...args) => userOutput += args.join(" ") + "\\n";
+      console.log = (...args) => userOutput += args.join(" ") + "\n";
 
       try {
         eval(code);
@@ -79,8 +76,8 @@ improved_html = """<!DOCTYPE html>
         }
       } catch (e) {
         console.log = log;
-        document.getElementById("output").textContent = "❌ Error: " + e.message + "\\n" +
-          "💡 Tip: Make sure your text is in quotation marks. Example: console.log(\\"Hello, World!\\");";
+        document.getElementById("output").textContent = "❌ Error: " + e.message + "\n" +
+          "💡 Tip: Make sure your text is in quotation marks. Example: console.log(\"Hello, World!\");";
       }
     }
 
@@ -115,10 +112,3 @@ improved_html = """<!DOCTYPE html>
   </div>
 </body>
 </html>
-"""
-
-# Pfad definieren
-output_file = Path("/mnt/data/learn-to-code-app_better_intro.html")
-output_file.write_text(improved_html, encoding="utf-8")
-
-output_file.name
