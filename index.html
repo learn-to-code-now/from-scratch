@@ -32,12 +32,14 @@
     }
 
     function loadLesson() {
-      document.getElementById("lessonTitle").innerText = "Lesson 1: Hello World";
+      document.getElementById("lessonTitle").innerText = "Lesson 1: Print a message";
       document.getElementById("lessonText").innerText =
-        "In programming, we use console.log() to print something on the screen.\n\n" +
-        "Your task: Print the phrase Hello, World!\n\n" +
-        "✅ Tip: Wrap the text in quotation marks like this:\n" +
-        'console.log("Hello, World!");';
+        "Welcome to your first programming lesson!\n\n" +
+        "🧠 In programming, we can send a message to the screen using a special command called console.log.\n\n" +
+        "✏️ Example:\n" +
+        'console.log("Hello, World!");\n\n' +
+        "This line prints the message Hello, World!\n\n" +
+        "🧪 Now you try: type exactly that line and click 'Run Code'.";
 
       editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
         lineNumbers: true,
@@ -59,25 +61,34 @@
         console.log = log;
 
         if (!code.includes("console.log")) {
-          document.getElementById("output").textContent = "❌ You must use console.log to print output.";
+          document.getElementById("output").textContent =
+            "❌ You need to use the command console.log(...) to print something.
+" +
+            "💡 Tip: Try this: console.log("Hello, World!");";
           return;
         }
         if (!code.includes('"') && !code.includes("'")) {
-          document.getElementById("output").textContent = "❌ Your text must be inside quotation marks.";
+          document.getElementById("output").textContent =
+            "❌ Your message must be inside quotation marks.
+" +
+            "💡 Tip: Use double quotes like this: console.log("Hello, World!");";
           return;
         }
 
         const trimmedOutput = userOutput.trim();
         if (trimmedOutput === "Hello, World!") {
-          document.getElementById("output").textContent = "✅ Correct! Well done.";
+          document.getElementById("output").textContent = "✅ Correct! You've completed Lesson 1.";
         } else {
           document.getElementById("output").textContent =
-            `⚠️ Your output was: "${trimmedOutput}". It should be exactly: "Hello, World!"`;
+            `⚠️ Your output was: "${trimmedOutput}"
+` +
+            "💡 It should be exactly: Hello, World!";
         }
       } catch (e) {
         console.log = log;
-        document.getElementById("output").textContent = "❌ Error: " + e.message + "\n" +
-          "💡 Tip: Make sure your text is in quotation marks. Example: console.log(\"Hello, World!\");";
+        document.getElementById("output").textContent =
+          "❌ Error in your code: " + e.message + "\n" +
+          "💡 Make sure you type: console.log("Hello, World!");";
       }
     }
 
@@ -98,8 +109,8 @@
 
   <div id="startScreen">
     <h1>Welcome to Learn to Code</h1>
-    <p>Programming means telling a computer what to do – step by step.</p>
-    <p>In this course, you'll learn JavaScript from scratch. No experience needed.</p>
+    <p>This course is for absolute beginners.</p>
+    <p>We'll start with the basics and move step by step.</p>
     <button onclick="showLesson()">Start Lesson 1</button>
   </div>
 
