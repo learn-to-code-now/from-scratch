@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Learn to Code – Login</title>
+  <title>Learn to Code – Start</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/mode/javascript/javascript.min.js"></script>
@@ -10,6 +10,7 @@
     body { font-family: sans-serif; padding: 20px; }
     #editor { height: 200px; }
     #output { background: #f0f0f0; padding: 10px; margin-top: 10px; white-space: pre-wrap; }
+    #startScreen, #lessonSection { display: none; }
   </style>
   <script>
     let editor;
@@ -19,11 +20,16 @@
       if (true) {
         localStorage.setItem("validLicense", "true");
         document.getElementById("loginSection").style.display = "none";
-        document.getElementById("lessonSection").style.display = "block";
-        loadLesson();
+        document.getElementById("startScreen").style.display = "block";
       } else {
         alert("Invalid license key. Please check your Gumroad purchase.");
       }
+    }
+
+    function showLesson() {
+      document.getElementById("startScreen").style.display = "none";
+      document.getElementById("lessonSection").style.display = "block";
+      loadLesson();
     }
 
     function loadLesson() {
@@ -62,8 +68,7 @@
     window.onload = () => {
       if (localStorage.getItem("validLicense") === "true") {
         document.getElementById("loginSection").style.display = "none";
-        document.getElementById("lessonSection").style.display = "block";
-        loadLesson();
+        document.getElementById("startScreen").style.display = "block";
       }
     };
   </script>
@@ -75,7 +80,14 @@
     <button onclick="validateLicenseKey()">Access Course</button>
   </div>
 
-  <div id="lessonSection" style="display:none;">
+  <div id="startScreen">
+    <h1>Welcome to Learn to Code</h1>
+    <p>Programming means telling a computer what to do – step by step.</p>
+    <p>In this course, you'll learn JavaScript from scratch. No experience needed.</p>
+    <button onclick="showLesson()">Start Lesson 1</button>
+  </div>
+
+  <div id="lessonSection">
     <h1 id="lessonTitle"></h1>
     <p id="lessonText"></p>
     <textarea id="editor"></textarea><br>
