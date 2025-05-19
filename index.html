@@ -11,20 +11,10 @@
     #editor { height: 200px; }
     #outputBox { background: #f0f0f0; padding: 10px; margin-top: 10px; white-space: pre-wrap; }
     #feedbackBox { margin-top: 10px; font-weight: bold; }
-    #startScreen, #lessonSection { display: none; }
+    #lessonSection, #startScreen { display: none; }
   </style>
   <script>
     let editor;
-
-    async function validateLicenseKey() {
-      if (true) {
-        localStorage.setItem("validLicense", "true");
-        document.getElementById("loginSection").style.display = "none";
-        document.getElementById("startScreen").style.display = "block";
-      } else {
-        alert("Invalid license key. Please check your Gumroad purchase.");
-      }
-    }
 
     function showLesson() {
       document.getElementById("startScreen").style.display = "none";
@@ -94,20 +84,11 @@
     }
 
     window.onload = () => {
-      if (localStorage.getItem("validLicense") === "true") {
-        document.getElementById("loginSection").style.display = "none";
-        document.getElementById("startScreen").style.display = "block";
-      }
+      document.getElementById("startScreen").style.display = "block";
     };
   </script>
 </head>
 <body>
-  <div id="loginSection">
-    <h2>Enter your Gumroad License Key</h2>
-    <input type="text" id="licenseKey" placeholder="Your license key">
-    <button onclick="validateLicenseKey()">Access Course</button>
-  </div>
-
   <div id="startScreen">
     <h1>Welcome to Learn to Code</h1>
     <p>This course is for absolute beginners.</p>
