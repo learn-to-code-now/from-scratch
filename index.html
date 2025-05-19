@@ -1,110 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Learn to Code – Start</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.css">
+  <meta charset="UTF-8" />
+  <title>Learn to Code</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/mode/javascript/javascript.min.js"></script>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    #editor { height: 200px; }
-    #outputBox { background: #f0f0f0; padding: 10px; margin-top: 10px; white-space: pre-wrap; }
-    #feedbackBox { margin-top: 10px; font-weight: bold; }
-    #lessonSection, #startScreen { display: none; }
-  </style>
-  <script>
-    let editor;
-
-    function showLesson() {
-      document.getElementById("startScreen").style.display = "none";
-      document.getElementById("lessonSection").style.display = "block";
-      loadLesson();
-    }
-
-    function loadLesson() {
-      document.getElementById("lessonTitle").innerText = "Lesson 1: Print a message";
-      document.getElementById("lessonText").innerText =
-        "Welcome to your first programming lesson!\n\n" +
-        "🧠 In programming, we can send a message to the screen using a special command called console.log.\n\n" +
-        "✏️ Example:\n" +
-        'console.log("Hello, World!");\n\n' +
-        "This line prints the message Hello, World!\n\n" +
-        "🧪 Now you try: type exactly that line and click 'Run Code'.";
-
-      editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
-        lineNumbers: true,
-        mode: "javascript",
-        theme: "default"
-      });
-
-      editor.setValue("// Type your code here...");
-    }
-
-    function runCode() {
-      const code = editor.getValue();
-      let userOutput = "";
-      const log = console.log;
-      console.log = (...args) => userOutput += args.join(" ") + "\n";
-
-      try {
-        eval(code);
-        console.log = log;
-
-        const trimmedOutput = userOutput.trim();
-        document.getElementById("outputBox").textContent = trimmedOutput || "(no output)";
-
-        if (!code.includes("console.log")) {
-          document.getElementById("feedbackBox").textContent =
-            "❌ You need to use the command console.log(...) to print something.\n" +
-            "💡 Tip: Try this: console.log(\"Hello, World!\");";
-          return;
-        }
-        if (!code.includes('"') && !code.includes("'")) {
-          document.getElementById("feedbackBox").textContent =
-            "❌ Your message must be inside quotation marks.\n" +
-            "💡 Tip: Use double quotes like this: console.log(\"Hello, World!\");";
-          return;
-        }
-
-        if (trimmedOutput === "Hello, World!") {
-          document.getElementById("feedbackBox").textContent =
-            "✅ Correct! You've completed Lesson 1.";
-        } else {
-          document.getElementById("feedbackBox").textContent =
-            `⚠️ Your output was: "${trimmedOutput}"\n💡 It should be exactly: Hello, World!`;
-        }
-      } catch (e) {
-        console.log = log;
-        document.getElementById("outputBox").textContent = "";
-        document.getElementById("feedbackBox").textContent =
-          "❌ Error in your code: " + e.message + "\n" +
-          "💡 Make sure you type: console.log(\"Hello, World!\");";
-      }
-    }
-
-    window.onload = () => {
-      document.getElementById("startScreen").style.display = "block";
-    };
-  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <div id="startScreen">
-    <h1>Welcome to Learn to Code</h1>
-    <p>This course is for absolute beginners.</p>
-    <p>We'll start with the basics and move step by step.</p>
-    <button onclick="showLesson()">Start Lesson 1</button>
-  </div>
-
-  <div id="lessonSection">
-    <h1 id="lessonTitle"></h1>
-    <pre id="lessonText"></pre>
-    <textarea id="editor"></textarea><br>
-    <button onclick="runCode()">Run Code</button>
-
+  <div id="app">
+    <div id="lessonTitle"></div>
+    <pre id="lessonInstruction"></pre>
+    <textarea id="codeEditor"></textarea>
+    <button onclick="runLesson()">Run Code</button>
     <h3>🖥️ Output:</h3>
-    <pre id="outputBox"></pre>
-    <div id="feedbackBox"></div>
+    <pre id="output"></pre>
+    <div id="feedback"></div>
+    <div>
+      <button onclick="prevLesson()">⬅️ Back</button>
+      <button onclick="nextLesson()">Next ➡️</button>
+    </div>
   </div>
+  <script src="js/lessons.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
