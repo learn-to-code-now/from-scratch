@@ -9,7 +9,8 @@
   <style>
     body { font-family: sans-serif; padding: 20px; }
     #editor { height: 200px; }
-    #output { background: #f0f0f0; padding: 10px; margin-top: 10px; white-space: pre-wrap; }
+    #outputBox { background: #f0f0f0; padding: 10px; margin-top: 10px; white-space: pre-wrap; }
+    #feedbackBox { margin-top: 10px; font-weight: bold; }
     #startScreen, #lessonSection { display: none; }
   </style>
   <script>
@@ -60,35 +61,35 @@
         eval(code);
         console.log = log;
 
+        const trimmedOutput = userOutput.trim();
+        document.getElementById("outputBox").textContent = trimmedOutput || "(no output)";
+
         if (!code.includes("console.log")) {
-          document.getElementById("output").textContent =
-            "❌ You need to use the command console.log(...) to print something.
-" +
-            "💡 Tip: Try this: console.log("Hello, World!");";
+          document.getElementById("feedbackBox").textContent =
+            "❌ You need to use the command console.log(...) to print something.\n" +
+            "💡 Tip: Try this: console.log(\"Hello, World!\");";
           return;
         }
         if (!code.includes('"') && !code.includes("'")) {
-          document.getElementById("output").textContent =
-            "❌ Your message must be inside quotation marks.
-" +
-            "💡 Tip: Use double quotes like this: console.log("Hello, World!");";
+          document.getElementById("feedbackBox").textContent =
+            "❌ Your message must be inside quotation marks.\n" +
+            "💡 Tip: Use double quotes like this: console.log(\"Hello, World!\");";
           return;
         }
 
-        const trimmedOutput = userOutput.trim();
         if (trimmedOutput === "Hello, World!") {
-          document.getElementById("output").textContent = "✅ Correct! You've completed Lesson 1.";
+          document.getElementById("feedbackBox").textContent =
+            "✅ Correct! You've completed Lesson 1.";
         } else {
-          document.getElementById("output").textContent =
-            `⚠️ Your output was: "${trimmedOutput}"
-` +
-            "💡 It should be exactly: Hello, World!";
+          document.getElementById("feedbackBox").textContent =
+            `⚠️ Your output was: "${trimmedOutput}"\n💡 It should be exactly: Hello, World!`;
         }
       } catch (e) {
         console.log = log;
-        document.getElementById("output").textContent =
+        document.getElementById("outputBox").textContent = "";
+        document.getElementById("feedbackBox").textContent =
           "❌ Error in your code: " + e.message + "\n" +
-          "💡 Make sure you type: console.log("Hello, World!");";
+          "💡 Make sure you type: console.log(\"Hello, World!\");";
       }
     }
 
@@ -119,7 +120,10 @@
     <pre id="lessonText"></pre>
     <textarea id="editor"></textarea><br>
     <button onclick="runCode()">Run Code</button>
-    <pre id="output"></pre>
+
+    <h3>🖥️ Output:</h3>
+    <pre id="outputBox"></pre>
+    <div id="feedbackBox"></div>
   </div>
 </body>
 </html>
